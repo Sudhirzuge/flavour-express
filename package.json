@@ -1,0 +1,26 @@
+{
+  "name": "namaste-react-live",
+  "version": "1.0.0",
+  "description": "this is first program of course",
+  "main": "App.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+  "author": "Sudhir Zuge",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "parcel": "^2.10.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "browserslist": [
+    "last 2 chrome version"
+  ]
+}
