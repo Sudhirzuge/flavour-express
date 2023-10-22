@@ -1,25 +1,4 @@
 
-// HMR - Hot MOdule Reloading
-// File watcher algorithm - C++
-// Bundling
-
-// MInify
-// cleaning our code
-// dev & production build
-// super fast build algorithm
-// catching while development
-// compression
-// compactible with older version of browsers
-// https on dev
-// port number
-// we should parcel catche in gitignore
-// because anything we can generate on server will be put in gitignore
-// consistent hashing algorithm
-
-// zero config because only require entry point
-// transistive dependencies  => react=>parcel=>dependencies
-// package manager takes care of transistive dependencie
-
 /***
  *Header
   -Titile (logo) 
@@ -35,9 +14,16 @@
     -Footer Links
  */
 
-
 import React from "react";
 import ReactDOM  from "react-dom/client";
+import Header from "./components/Header";      // default export
+import { Title } from "./components/Header";   // named export
+
+// import * as obj from "./components/Header";
+// // for above import use can like
+// obj.Title
+// obj.Header
+
 
 const restaurantList= [
     {
@@ -1013,8 +999,6 @@ const restaurantList= [
     "subtype": "basic"
   },]
 
-
-
 //here we just pass the multiple props
 const RestaurantCard=({name,cuisines,lastMileTravelString,cloudinaryImageId})=>{
     return(
@@ -1030,31 +1014,6 @@ const RestaurantCard=({name,cuisines,lastMileTravelString,cloudinaryImageId})=>{
      
     );
   }
-
-const Title = () => {
-    return (
-    <a href="/">
-    <img src="https://yt3.googleusercontent.com/ytc/AMLnZu_EC-ECXAxRAixWGEfMsE1rdSoetBHyxmLNdtCB=s900-c-k-c0x00ffffff-no-rj" alt="logo"
-    className="logo"/>
-    </a>
-      );
-  };
-
-  const Header = function (){
-    return (
-      <div className = "Header">
-        <Title/>
-        <div className="nav-items">
-          <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact</li>
-            <li>Cart</li>
-          </ul>
-        </div>
-      </div>
-    );
-  };
 
 // never use index as key use if you don't have any unique key in database
 const Body=()=>{
