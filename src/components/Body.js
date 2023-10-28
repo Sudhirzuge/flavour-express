@@ -13,7 +13,6 @@ function filterData(searchtext,restaurants) {
 
 }
 
-
 //never use index as key use if you don't have any unique key in database
 
 const Body=()=>{
@@ -75,15 +74,11 @@ const Body=()=>{
     </div>
     <div className="body">
      {
-
      filteredrestaurants.map((restaurant)=>
      {
-
       return <RestaurantCard {...restaurant.data} key={restaurant.data.id}/>;
-     
     }
      )
-      
      }
     </div>
     </>

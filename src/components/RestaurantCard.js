@@ -4,8 +4,7 @@ import { IMAGE_CDN_URL } from "../constants";
 const RestaurantCard=({name,cuisines,lastMileTravelString,cloudinaryImageId})=>{
     return(
      <div className="card">
-  <img src={IMAGE_CDN_URL+cloudinaryImageId}
-  />
+  <img src={IMAGE_CDN_URL+cloudinaryImageId}/>
      <h2>{name}</h2>
      <h3>{cuisines.join(", ")}</h3>
      <h3>{lastMileTravelString} Distance</h3>
