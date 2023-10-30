@@ -1,24 +1,4 @@
-import { IMAGE_CDN_URL } from "../constants";
-
-//here we just pass the multiple props
-// const RestaurantCard=({name,cuisines,lastMileTravelString,cloudinaryImageId})=>{
-//     return(
-//      <div className="card">
-//   <img src={IMAGE_CDN_URL+cloudinaryImageId}/>
-//      <h2>{name}</h2>
-//      <h3>{cuisines.join(", ")}</h3>
-//      <h3>{lastMileTravelString} Distance</h3>
-//      </div>
-     
-//     );
-//   };
-
-//   export default RestaurantCard;
-
-
-
-
-  import { IMG_CDN_URL } from "../constants";
+import { IMG_CDN_URL } from "../constants";
 
 // Restaurant card component: Image, name, cuisine
 const RestaurantCard = ({
@@ -32,7 +12,7 @@ const RestaurantCard = ({
 }) => {
   return (
     <div className="card">
-      <img src={IMG_CDN_URL+cloudinaryImageId} />
+      <img src={IMG_CDN_URL + cloudinaryImageId} />
       <h3>{name}</h3>
       <h5>{cuisines.join(", ")}</h5>
       <h5>{areaName}</h5>

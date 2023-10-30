@@ -24,6 +24,7 @@ import Contact from "./components/Contact";
 import Login from "./components/Login";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import RestaurantMenu from "./components/RestaurantMenu";
+import Profile from "./components/Profile"
   
   const Applayout =()=>{
       return(
@@ -36,39 +37,40 @@ import RestaurantMenu from "./components/RestaurantMenu";
   };
 
 
-const appRouter = createBrowserRouter(
-  [
+  const appRouter = createBrowserRouter([
     {
-      path : "/",
-      element : <Applayout/>,
-      errorElement : <Error />,
-      children :[
-           {
-            path : "/",
-            element : <Body/>
-           },
-           {
-            path : "/about",
-            element : <About/>
-           },
-           {
-            path : "/contact",
-            element : <Contact/>
-           },
-           {
-            path : "/restaurant/:resId",
-            element : <RestaurantMenu/>
-           }
-      ]
+      path: "/", // show path for routing
+      element: <Applayout />, // show component for particular path
+      errorElement: <Error />, // show error component for path is different
+      children: [
+        // show children component for routing
+        {
+          path: "/",
+          element: <Body />,
+        },
+        {
+          path: "about",
+          element: <About />,
+          children: [{ // nested routing
+            path: "profile",
+            element: <Profile />,
+          }]
+        },
+        {
+          path: "contact",
+          element: <Contact />,
+        },
+        {
+          path: "restaurant/:resId",
+          element: <RestaurantMenu />,
+        },
+      ],
     },
-
     {
-      path: "/login",
+      path: "login",
       element: <Login />,
-    }
-    
+    },
   ]);
-
 
 // create root using createRoot
 const root = ReactDOM.createRoot(document.getElementById("root"));
