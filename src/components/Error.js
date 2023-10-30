@@ -6,7 +6,7 @@ const Error = () => {
   const err = useRouteError();
   return (
     <div className="error-page">
-      <img src={ErrorImage} alt="Error Image" />
+      {/* <img src={ErrorImage} alt="Error Image" /> */}
       <h1>Oops! The restaurant you're looking for can't be found.</h1>
       <h3 className="error-data">{err.data}</h3>
       <h3 className="error-back-home">
@@ -17,3 +17,7 @@ const Error = () => {
 };
 
 export default Error;
+
+
+
+

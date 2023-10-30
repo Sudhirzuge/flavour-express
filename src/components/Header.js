@@ -1,46 +1,63 @@
+
 import { useState } from "react";
+import FoodFireLogo from "../Images/Food Fire Logo.png";
+import { Link } from "react-router-dom"; // imported Link for client side routing
+import { useNavigate } from "react-router-dom";
 
-//import { useState } from "react";
+// Title component for display logo
+const Title = () => (
+  <a href="/">
+    <img
+      className="logo"
+      src={FoodFireLogo}
+      alt="Food Fire Logo"
+      title="Food Fire Logo"
+    />
+  </a>
+);
 
-const LogedInUser=()=>{
-  //API call to check LogedIn
-  return true;
+// Header component for header section: Logo, Nav Items
+const Header = () => {
+  // use useState for user logged in or logged out
+  const [isLoggedin, setIsLoggedin] = useState(true);
+  const navigate = useNavigate();
+  return (
+    <div className="header">
+      <Title />
+      <div className="nav-items">
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
 
-}
-
- export const Title = () => {
-    return (
-    <a href="/">
-    <img src="https://yt3.googleusercontent.com/ytc/AMLnZu_EC-ECXAxRAixWGEfMsE1rdSoetBHyxmLNdtCB=s900-c-k-c0x00ffffff-no-rj" alt="logo"
-    className="logo"/>
-    </a>
-      );
-  };
-
-  const Header = function (){
-
-    const[IsLogedIn,setIsLogedIn]=useState(true);
-  //How to use useState in react?
-  //const [title,settitle]=useState("Food Villa");
-  //<h1>{title}</h1>;
-  //<button onClick={()=>settitle("New Food App")}>Title changes</button>
-    return (
-      <div className = "Header">
-        <Title/>
-      
-        <div className="nav-items">
-          <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact</li>
-            <li>Cart</li>
-          </ul>
-        </div>
-        {IsLogedIn?(<button onClick={()=>setIsLogedIn(false)}>LogOut</button>)
-        :(<button onClick={()=> setIsLogedIn(true)}>Login</button>)}
+          <li>
+            <Link to="/contact">Contact</Link>
+          </li>
+          <li>
+            <i className="fa-solid fa-cart-shopping"></i>
+          </li>
+          <li>
+            {/* use conditional rendering for login and logout */}
+            {isLoggedin ? (
+              <button
+                className="logout-btn"
+                onClick={() => setIsLoggedin(false)}
+              >
+                Logout
+              </button>
+            ) : (
+              <button className="login-btn" onClick={() => navigate("/login")}>
+                Login
+              </button>
+            )}
+          </li>
+        </ul>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
-  export default Header;
-
+export default Header;

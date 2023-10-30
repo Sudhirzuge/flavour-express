@@ -1,87 +1,117 @@
-import {restaurantList} from "../constants";
 import RestaurantCard from "./RestaurantCard";
-import Shimmer from "./Shimmer";
-import { useState,useEffect } from "react";
+import { useEffect, useState } from "react"; /* This is named export */
+import Shimmer from "./Shimmer"; /* This is default export */
+import { swiggy_api_URL } from "../constants";
 
-function filterData(searchtext,restaurants) {
-
-  const filter=restaurants.filter((restaurant)=>
-  restaurant?.data?.name?.toLowerCase()?.includes(searchtext.toLowerCase())
-
+// Filter the restaurant data according input type
+function filterData(searchText, restaurants) {
+  const resFilterData = restaurants.filter((restaurant) =>
+    restaurant?.info?.name.toLowerCase().includes(searchText.toLowerCase())
   );
-  return filter;
-
+  return resFilterData;
 }
 
-//never use index as key use if you don't have any unique key in database
+// Body Component for body section: It contain all restaurant cards
+const Body = () => {
+  // useState: To create a state variable, searchText, allRestaurants and filteredRestaurants is local state variable
+  const [searchText, setSearchText] = useState("");
+  const [allRestaurants, setAllRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
-const Body=()=>{
-
-  const [searchtext,setsearchtext]=useState([]);
-  const [filteredrestaurants,setfilteredrestaurants]=useState([]);
-  const[allrestaurants,setallrestaurants]=useState();
-  
-
-  //empty dependencies-once after renders because it contains callback function
-  //dependency array[searchtext]-once after renders and +every time renders(my search text changes)
-
-  useEffect(()=>{
-    //Api call
+  // use useEffect for one time call getRestaurants using empty dependency array
+  useEffect(() => {
     getRestaurants();
+  }, []);
 
-  },[]);
+  // async function getRestaurant to fetch Swiggy API data
+  async function getRestaurants() {
+    // handle the error using try... catch
+    try {
+      const response = await fetch(swiggy_api_URL);
+      const json = await response.json();
 
-  async function getRestaurants(){
-    const data=await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.3164945&lng=78.03219179999999&page_type=DESKTOP_WEB_LISTING")
-    const json=await data.json();
-    console.log(json);
-    setallrestaurants(json?.data?.cards[2]?.data?.data?.cards);
-    setfilteredrestaurants(json?.data?.cards[2]?.data?.data?.cards);
-  }
-  console.log("render()");
+      // initialize checkJsonData() function to check Swiggy Restaurant data
+      async function checkJsonData(jsonData) {
+        for (let i = 0; i < jsonData?.data?.cards.length; i++) {
 
-  //Conditional Rendering
-  //if restaurant is empty=>shimmer UI
-  //if restaurant has data=>actual data UI
+          // initialize checkData for Swiggy Restaurant data
+          let checkData = json?.data?.cards[i]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
 
- //Early return(when we don't want to render)
+          // if checkData is not undefined then return it
+          if (checkData !== undefined) {
+            return checkData;
+          }
+        }
+      }
 
- if(!allrestaurants)
- return null;
+      // call the checkJsonData() function which return Swiggy Restaurant data
+      const resData = await checkJsonData(json);
 
- if(filteredrestaurants?.length===0)
- return <h1>No match found for your search!!</h1>
-
-    return allrestaurants.length===0 ? (<Shimmer/>
-    ):(
-    <>
-     <div className="Search-container">
-     <input 
-      type="text"
-      className="search-input"
-      placeholder="search"
-      value={searchtext}
-      onChange={(e)=>{setsearchtext(e.target.value)}}
-       />
-       <button className="Search-btn" onClick={()=>{
-        //need to filter the Data
-      const data= filterData(searchtext,allrestaurants);
-        //update the state-restaurants
-
-        setfilteredrestaurants(data);
-      
-       }}>Search</button>
-    </div>
-    <div className="body">
-     {
-     filteredrestaurants.map((restaurant)=>
-     {
-      return <RestaurantCard {...restaurant.data} key={restaurant.data.id}/>;
+      // update the state variable restaurants with Swiggy API data
+      setAllRestaurants(resData);
+      setFilteredRestaurants(resData);
+    } catch (error) {
+      console.log(error);
     }
-     )
-     }
-    </div>
-    </>
-    );
+  }
+
+  // use searchData function and set condition if data is empty show error message
+  const searchData = (searchText, restaurants) => {
+    if (searchText !== "") {
+      const filteredData = filterData(searchText, restaurants);
+      setFilteredRestaurants(filteredData);
+      setErrorMessage("");
+      if (filteredData?.length === 0) {
+        setErrorMessage("No matches restaurant found");
+      }
+    } else {
+      setErrorMessage("");
+      setFilteredRestaurants(restaurants);
+    }
   };
-  export default Body;
+
+  // if allRestaurants is empty don't render restaurants cards
+  if (!allRestaurants) return null;
+
+  return (
+    <>
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search a restaurant you want..."
+          value={searchText}
+          // update the state variable searchText when we typing in input box
+          onChange={(e) => setSearchText(e.target.value)}
+        ></input>
+        <button
+          className="search-btn"
+          onClick={() => {
+            // user click on button searchData function is called
+            searchData(searchText, allRestaurants);
+          }}
+        >
+          Search
+        </button>
+      </div>
+      {errorMessage && <div className="error-container">{errorMessage}</div>}
+
+      {/* if restaurants data is not fetched then display Shimmer UI after the fetched data display restaurants cards */}
+      {allRestaurants?.length === 0 ? (
+        <Shimmer />
+      ) : (
+        <div className="restaurant-list">
+          {/* We are mapping restaurants array and passing JSON array data to RestaurantCard component as props with unique key as restaurant.data.id */}
+          {filteredRestaurants.map((restaurant) => {
+            return (
+              <RestaurantCard key={restaurant?.info?.id} {...restaurant?.info} />
+            );
+          })}
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Body;
