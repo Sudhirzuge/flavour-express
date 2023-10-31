@@ -35,7 +35,7 @@ const About = () => {
       <div className="about-container">
         <div className="about-left">
           <h1>
-            Welcome to <br /> The world of <br />{" "}
+            Welcome to The world of <br />{" "}
             <span>Tasty & Fresh Food</span>
           </h1>
           <h4>

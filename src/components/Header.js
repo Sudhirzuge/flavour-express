@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useOnline from "../Hooks/useOnline";
 import useAuth from "../Hooks/useAuth";
 import { useEffect } from "react";
+import Instamart from "./Instamart";
 import useLocalStorage from "../Hooks/useLocalStorge";
 
 // Title component for display logo
@@ -56,6 +57,9 @@ const Header = () => {
 
           <li>
             <Link to="/contact">Contact</Link>
+          </li>
+          <li>
+            <Link to="/instamart">Instamart</Link>
           </li>
           <li>
             <i className="fa-solid fa-cart-shopping"></i>

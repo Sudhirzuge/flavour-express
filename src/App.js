@@ -25,6 +25,7 @@ import Login from "./components/Login";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Profile from "./components/Profile"
+import Instamart from "./components/Instamart";
   
   const Applayout =()=>{
       return(
@@ -60,6 +61,11 @@ import Profile from "./components/Profile"
           path: "contact",
           element: <Contact />,
         },
+        {
+          path: "instamart",
+          element: <Instamart />,
+        },
+
         {
           path: "restaurant/:resId",
           element: <RestaurantMenu />,

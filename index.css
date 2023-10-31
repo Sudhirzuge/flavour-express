@@ -20,8 +20,8 @@ a {
 
 /* create global variable with :root selector Start*/
 :root {
-  --header-bg-color: rgb(183, 203, 66);
-  --footer-bg-color: rgb(183, 203, 66);
+  --header-bg-color: white;
+  --footer-bg-color: rgb(132, 140, 152);
   --body-bg-color: #f6f7f5;
   --input-bg: #f2f2f2;
   --input-bg-focus: #dbdbdb;
@@ -1007,4 +1007,8 @@ a {
   .login-form {
     max-width: 280px;
   }
+}
+
+.sectionofinstamart {
+  border: 1px solid black;
 }
